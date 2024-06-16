@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+option go_package = "/genproto";
+
+package protos;
+
+import "protos/common.proto";
+import "protos/book.proto";
+
+
+service GenreService {
+    rpc CreateGenre(GenreCreate) returns (Genre) {}
+    rpc GetGenre(ByName) returns (GenreCreate) {}
+    rpc UpdateGenre(GenreCreate) returns (Void) {}
+    rpc DeleteGenre(ById) returns (Void) {}
+    rpc GetAllGenres(NameFilter) returns (Genres) {}
+
+    rpc GetBooksByGenre(GenreId) returns (GenreBooks);
+
+}
+
+
+message GenreCreate {
+    string Id = 1;
+    string Name = 2;
+}
+
+message Genre {
+    string Id = 1;
+    string Name = 2;
+}
+
+message Genres {
+    repeated Genre Genres = 1;
+}
+
+message GenreBooks {
+    repeated Book Books = 1;
+}
+
+message GenreId{
+    string GenreId = 1;
+}

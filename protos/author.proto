@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+option go_package = "/genproto";
+
+package protos;
+
+import "protos/common.proto";
+import "protos/book.proto";
+
+
+service AuthorService {
+    rpc CreateAuthor(AuthorCreate) returns (Author) {}
+    rpc GetAuthor(ById) returns (Author) {}
+    rpc UpdateAuthor(AuthorCreate) returns (Void) {}
+    rpc DeleteAuthor(ById) returns (Void) {}
+    rpc GetAllAuthors(NameFilter) returns (Authors) {}
+
+    rpc GetAuthorBooks(AuthorID) returns (UserBook);
+
+}
+
+
+message AuthorCreate {
+    string Id = 1;
+    string Name = 2;
+    string Biography = 3;
+}
+
+message Author {
+    string Id = 1;
+    string Name = 2;
+    string Biography = 3;
+}
+
+message Authors {
+    repeated Author Authors = 1;
+}
+
+message UserBook {
+    repeated Book Books = 1;
+}
+
+message AuthorID{
+    string AuthorId = 1;
+}

@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+option go_package = "/genproto";
+
+package protos;
+
+import "protos/common.proto";
+import "protos/book.proto";
+
+service BorrowerService {
+    rpc CreateBorrower(BorrowerCreate) returns (Borrower) {}
+    rpc GetBorrower(ById) returns (Borrower) {}
+    rpc UpdateBorrower(BorrowerCreate) returns (Void) {}
+    rpc DeleteBorrower(ById) returns (Void) {}
+    rpc GetAllBorrowers(Void) returns (Borrowers) {}
+
+    rpc BorrowerBooks(UserId) returns (BorrowedBooks);
+    rpc GetOverdueBooks(OverdueRequest) returns (BorrowedBooks);
+    rpc HistoryUser(UserId) returns (BorrowingHistory);
+}
+
+
+message BorrowerCreate {
+    string Id = 1;
+    string UserID = 2;
+    string BookID = 3;
+    string BorrowDate = 4;
+    string ReturnDate = 5;
+}
+
+message Borrower {
+    string Id = 1;
+    string UserID = 2;
+    string BookID = 3;
+    string BorrowDate = 4;
+    string ReturnDate = 5;
+}
+ 
+message Borrowers {
+    repeated Borrower Borrowers = 1;
+}
+
+message BorrowingHistory {
+    repeated BorrowedBook books = 1;
+  }
+
+message BorrowedBooks {
+    repeated BorrowedBook books = 1;
+}
+message UserId {
+    string userId = 1;
+}
+
+message OverdueRequest {
+    string current_date = 1;
+  }
+
+message BorrowedBook {
+  Book book = 1;
+  string borrow_date = 2;
+  string return_date = 3;
+}
+

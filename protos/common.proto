@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option go_package = "/genproto";
+
+package protos;
+
+message Void {}
+
+message ById {
+    string Id = 1;
+}
+
+message ByName {
+    string Name = 1;
+}
+message NameFilter{
+    string Name = 1;
+}

@@ -1,0 +1,881 @@
+definitions:
+  genproto.Author:
+    properties:
+      Biography:
+        type: string
+      Id:
+        type: string
+      Name:
+        type: string
+    type: object
+  genproto.AuthorCreate:
+    properties:
+      Biography:
+        type: string
+      Id:
+        type: string
+      Name:
+        type: string
+    type: object
+  genproto.Authors:
+    properties:
+      Authors:
+        items:
+          $ref: '#/definitions/genproto.Author'
+        type: array
+    type: object
+  genproto.Book:
+    properties:
+      author_id:
+        type: string
+      genre_id:
+        type: string
+      id:
+        type: string
+      summary:
+        type: string
+      title:
+        type: string
+    type: object
+  genproto.BookCreate:
+    properties:
+      AuthorID:
+        type: string
+      GenreID:
+        type: string
+      Id:
+        type: string
+      Summary:
+        type: string
+      Title:
+        type: string
+    type: object
+  genproto.Books:
+    properties:
+      Books:
+        items:
+          $ref: '#/definitions/genproto.Book'
+        type: array
+    type: object
+  genproto.BorrowedBook:
+    properties:
+      book:
+        $ref: '#/definitions/genproto.Book'
+      borrow_date:
+        type: string
+      return_date:
+        type: string
+    type: object
+  genproto.BorrowedBooks:
+    properties:
+      books:
+        items:
+          $ref: '#/definitions/genproto.BorrowedBook'
+        type: array
+    type: object
+  genproto.Borrower:
+    properties:
+      BookID:
+        type: string
+      BorrowDate:
+        type: string
+      Id:
+        type: string
+      ReturnDate:
+        type: string
+      UserID:
+        type: string
+    type: object
+  genproto.BorrowerCreate:
+    properties:
+      BookID:
+        type: string
+      BorrowDate:
+        type: string
+      Id:
+        type: string
+      ReturnDate:
+        type: string
+      UserID:
+        type: string
+    type: object
+  genproto.Borrowers:
+    properties:
+      Borrowers:
+        items:
+          $ref: '#/definitions/genproto.Borrower'
+        type: array
+    type: object
+  genproto.BorrowingHistory:
+    properties:
+      books:
+        items:
+          $ref: '#/definitions/genproto.BorrowedBook'
+        type: array
+    type: object
+  genproto.Genre:
+    properties:
+      Id:
+        type: string
+      Name:
+        type: string
+    type: object
+  genproto.GenreBooks:
+    properties:
+      Books:
+        items:
+          $ref: '#/definitions/genproto.Book'
+        type: array
+    type: object
+  genproto.GenreCreate:
+    properties:
+      Id:
+        type: string
+      Name:
+        type: string
+    type: object
+  genproto.Genres:
+    properties:
+      Genres:
+        items:
+          $ref: '#/definitions/genproto.Genre'
+        type: array
+    type: object
+  genproto.TitleFilter:
+    properties:
+      title:
+        type: string
+    type: object
+  genproto.UserBook:
+    properties:
+      Books:
+        items:
+          $ref: '#/definitions/genproto.Book'
+        type: array
+    type: object
+  genproto.Void:
+    type: object
+info:
+  contact: {}
+paths:
+  /author:
+    get:
+      consumes:
+      - application/json
+      description: This API retrieves all authors based on a name filter
+      parameters:
+      - description: Author Name
+        in: query
+        name: name
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/genproto.Authors'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: Get All Authors
+      tags:
+      - AUTHOR
+  /author/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: This api deletes author by id
+      parameters:
+      - description: AUTHOR ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: author deleted successfully
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: DELETE AUTHOR
+      tags:
+      - AUTHOR
+    get:
+      consumes:
+      - application/json
+      description: This API gets an author by ID
+      parameters:
+      - description: AUTHOR ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/genproto.Author'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: GET AUTHOR
+      tags:
+      - AUTHOR
+  /author/author/{id}:
+    get:
+      consumes:
+      - application/json
+      description: This api logs book in
+      parameters:
+      - description: AUTHOR ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/genproto.UserBook'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: GET AUTHOR BOOK
+      tags:
+      - AUTHOR
+  /author/create:
+    post:
+      consumes:
+      - application/json
+      description: This api create author
+      parameters:
+      - description: Author
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/genproto.AuthorCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/genproto.Author'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: CREATE AUTHOR
+      tags:
+      - AUTHOR
+  /author/update:
+    put:
+      consumes:
+      - application/json
+      description: This api updatedes author
+      parameters:
+      - description: Author
+        in: body
+        name: author
+        required: true
+        schema:
+          $ref: '#/definitions/genproto.Author'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: author updated successfully
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: UPDATES AUTHOR
+      tags:
+      - AUTHOR
+  /book/{title}:
+    get:
+      consumes:
+      - application/json
+      description: This api get book by title
+      parameters:
+      - description: BOOK TITLE
+        in: path
+        name: title
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/genproto.Book'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: GET BOOK
+      tags:
+      - BOOK
+  /book/all:
+    get:
+      consumes:
+      - application/json
+      description: This api get all books
+      parameters:
+      - description: Book Title
+        in: query
+        name: title
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/genproto.TitleFilter'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: GET ALL BOOKS
+      tags:
+      - BOOK
+  /book/create:
+    post:
+      consumes:
+      - application/json
+      description: This api create book
+      parameters:
+      - description: Book
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/genproto.BookCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/genproto.Book'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: CREATE BOOK
+      tags:
+      - BOOK
+  /book/del/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: This api logs book in
+      parameters:
+      - description: BOOK ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/genproto.Void'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: DELETE BOOK
+      tags:
+      - BOOK
+  /book/search:
+    get:
+      consumes:
+      - application/json
+      description: This API searches for books by title or author.
+      parameters:
+      - description: Book Title
+        in: query
+        name: title
+        type: string
+      - description: Author Name
+        in: query
+        name: author
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/genproto.Books'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: Search Books
+      tags:
+      - BOOK
+  /book/update:
+    put:
+      consumes:
+      - application/json
+      description: This api updatedes book
+      parameters:
+      - description: Book
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/genproto.BookCreate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: book updated successfully
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: UPDATES BOOK
+      tags:
+      - BOOK
+  /borrower/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: This api deletes borrower by id
+      parameters:
+      - description: BORROWER ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: borrower deleted successfully
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: DELETES BORROWER
+      tags:
+      - BORROWER
+    get:
+      consumes:
+      - application/json
+      description: This api get borrower by id
+      parameters:
+      - description: BORROWER ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/genproto.Borrower'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: GET BORROWER
+      tags:
+      - BORROWER
+  /borrower/all:
+    get:
+      consumes:
+      - application/json
+      description: This api get all borrowers
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/genproto.Borrowers'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: GET ALL BORROWERS
+      tags:
+      - BORROWER
+  /borrower/create:
+    post:
+      consumes:
+      - application/json
+      description: This api create borrower
+      parameters:
+      - description: Borrower
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/genproto.BorrowerCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/genproto.Borrower'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: CREATE BORROWER
+      tags:
+      - BORROWER
+  /borrower/history/{id}:
+    get:
+      consumes:
+      - application/json
+      description: This api GETS borrower by id
+      parameters:
+      - description: USER ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/genproto.BorrowingHistory'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: GET USER BORROWER HISTORY
+      tags:
+      - BORROWER
+  /borrower/overdue:
+    get:
+      consumes:
+      - application/json
+      description: This API retrieves a list of books that are overdue.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/genproto.BorrowedBooks'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: Get Overdue Books
+      tags:
+      - BORROWER
+  /borrower/update:
+    put:
+      consumes:
+      - application/json
+      description: This api updates borrower
+      parameters:
+      - description: Borrower
+        in: body
+        name: borrower
+        required: true
+        schema:
+          $ref: '#/definitions/genproto.BorrowerCreate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: borrower updated successfully
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: UPDATES BORROWER
+      tags:
+      - BORROWER
+  /borrower/users/{id}:
+    get:
+      consumes:
+      - application/json
+      description: This api GETS borrower by id
+      parameters:
+      - description: USER ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/genproto.BorrowedBooks'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: GET USERS BORROWER
+      tags:
+      - BORROWER
+  /genre/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: This api delete genre by id
+      parameters:
+      - description: GENRE ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: genre deleted successfully
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: DELETES GENRE
+      tags:
+      - GENRE
+  /genre/{name}:
+    get:
+      consumes:
+      - application/json
+      description: This api get genre by name
+      parameters:
+      - description: GENRE NAME
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/genproto.Genre'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: GET GENRE
+      tags:
+      - GENRE
+  /genre/all:
+    get:
+      consumes:
+      - application/json
+      description: This api get all books by id
+      parameters:
+      - description: Genre Name
+        in: query
+        name: name
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/genproto.Genres'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: GET ALL GENRES
+      tags:
+      - GENRE
+  /genre/create:
+    post:
+      consumes:
+      - application/json
+      description: This api create genre
+      parameters:
+      - description: Genre
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/genproto.GenreCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/genproto.Genre'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: CREATE GENRE
+      tags:
+      - GENRE
+  /genre/genre/{id}:
+    get:
+      consumes:
+      - application/json
+      description: This api logs book in
+      parameters:
+      - description: GENRE ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/genproto.GenreBooks'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: GET GENRE BOOK
+      tags:
+      - GENRE
+  /genre/update:
+    put:
+      consumes:
+      - application/json
+      description: This api updatedes genre
+      parameters:
+      - description: Genre
+        in: body
+        name: genre
+        required: true
+        schema:
+          $ref: '#/definitions/genproto.GenreCreate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: genre updated successfully
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: UPDATES GENRE
+      tags:
+      - GENRE
+swagger: "2.0"
