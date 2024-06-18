@@ -6,12 +6,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// @Router 				/genre/create [POST]
+// @Router 				/admin/genre/create [POST]
 // @Summary 			CREATE GENRE
 // @Description		 	This api create genre
 // @Tags 				GENRE
 // @Accept 				json
 // @Produce 			json
+// @Security            BearerAuth
 // @Param data 			body pb.GenreCreate true "Genre"
 // @Success 201 		{object} pb.Genre
 // @Failure 400 		string Error
@@ -35,6 +36,7 @@ func (h *HandlerStruct) CreateGenre(c *gin.Context) {
 // @Tags 				GENRE
 // @Accept 				json
 // @Produce 			json
+// @Security            BearerAuth
 // @Param 			    name path string true "GENRE NAME"
 // @Success 200			{object} pb.Genre
 // @Failure 400 		string Error
@@ -52,12 +54,13 @@ func (h *HandlerStruct) GetGenre(c *gin.Context) {
 	c.JSON(200, genre)
 }
 
-// @Router 				/genre/update [PUT]
+// @Router 				/admin/genre/update [PUT]
 // @Summary 			UPDATES GENRE
 // @Description		 	This api updatedes genre
 // @Tags 				GENRE
 // @Accept 				json
 // @Produce 			json
+// @Security            BearerAuth
 // @Param  genre  body pb.GenreCreate true "Genre"
 // @Success 200			{object} string "genre updated successfully"
 // @Failure 400 		string Error
@@ -77,12 +80,13 @@ func (h *HandlerStruct) UpdateGenre(c *gin.Context) {
 	c.JSON(200, "genre updated successfully")
 }
 
-// @Router 				/genre/{id} [DELETE]
+// @Router 				/admin/genre/{id} [DELETE]
 // @Summary 			DELETES GENRE
 // @Description		 	This api delete genre by id
 // @Tags 				GENRE
 // @Accept 				json
 // @Produce 			json
+// @Security            BearerAuth
 // @Param 			    id path string true "GENRE ID"
 // @Success 200			{object} string "genre deleted successfully"
 // @Failure 400 		string Error
@@ -105,6 +109,7 @@ func (h *HandlerStruct) DeleteGenre(c *gin.Context) {
 // @Tags 				GENRE
 // @Accept 				json
 // @Produce 			json
+// @Security            BearerAuth
 // @Param 			    name query string false "Genre Name"
 // @Success 200			{object} pb.Genres
 // @Failure 400 		string Error
@@ -127,10 +132,11 @@ func (h *HandlerStruct) GetAllGenres(c *gin.Context) {
 // @Tags 				GENRE
 // @Accept 				json
 // @Produce 			json
+// @Security            BearerAuth
 // @Param 			    id path string true "GENRE ID"
 // @Success 201 		{object} pb.GenreBooks
 // @Failure 400 		string Error
-func(h *HandlerStruct)GetBooksByGenre(c *gin.Context){
+func (h *HandlerStruct) GetBooksByGenre(c *gin.Context) {
 	var req pb.GenreId
 	id := c.Param("id")
 	req.GenreId = id

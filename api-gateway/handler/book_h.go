@@ -6,12 +6,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// @Router 				/book/create [POST]
+// @Router 				/admin/book/create [POST]
 // @Summary 			CREATE BOOK
 // @Description		 	This api create book
 // @Tags 				BOOK
 // @Accept 				json
 // @Produce 			json
+// @Security            BearerAuth
 // @Param data 			body pb.BookCreate true "Book"
 // @Success 201 		{object} pb.Book
 // @Failure 400 		string Error
@@ -36,6 +37,7 @@ func (h *HandlerStruct) CreateBook(c *gin.Context) {
 // @Tags 				BOOK
 // @Accept 				json
 // @Produce 			json
+// @Security            BearerAuth
 // @Param 			    title path string true "BOOK TITLE"
 // @Success 200			{object} pb.Book
 // @Failure 400 		string Error
@@ -58,6 +60,7 @@ func (h *HandlerStruct) GetBook(c *gin.Context) {
 // @Tags 				BOOK
 // @Accept 				json
 // @Produce 			json
+// @Security            BearerAuth
 // @Param 			    title query string false "Book Title"
 // @Success 200			{object} pb.TitleFilter
 // @Failure 400 		string Error
@@ -74,12 +77,13 @@ func (h *HandlerStruct) GetBooks(c *gin.Context) {
 	c.JSON(200, book)
 }
 
-// @Router 				/book/update [PUT]
+// @Router 				/admin/book/update [PUT]
 // @Summary 			UPDATES BOOK
 // @Description		 	This api updatedes book
 // @Tags 				BOOK
 // @Accept 				json
 // @Produce 			json
+// @Security            BearerAuth
 // @Param  book  body pb.BookCreate true "Book"
 // @Success 200			{object} string "book updated successfully"
 // @Failure 400 		string Error
@@ -98,12 +102,13 @@ func (h *HandlerStruct) UpdateBook(c *gin.Context) {
 	c.JSON(200, gin.H{"message": "book successfully updated"})
 }
 
-// @Router 				/book/del/{id} [DELETE]
+// @Router 				/admin/book/del/{id} [DELETE]
 // @Summary 			DELETE BOOK
 // @Description		 	This api logs book in
 // @Tags 				BOOK
 // @Accept 				json
 // @Produce 			json
+// @Security            BearerAuth
 // @Param 			    id path string true "BOOK ID"
 // @Success 201 		{object} pb.Void
 // @Failure 400 		string Error
@@ -119,18 +124,19 @@ func (h *HandlerStruct) DeletesBook(c *gin.Context) {
 	c.JSON(200, "Book deleted")
 }
 
-//@Router /book/search [GET]
+// @Router /book/search [GET]
 // @Summary Search Books
 // @Description This API searches for books by title or author.
 // @Tags BOOK
 // @Accept json
 // @Produce json
+// @Security            BearerAuth
 // @Param title query string false "Book Title"
 // @Param author query string false "Author Name"
 // @Success 200 {object} pb.Books
 // @Failure 400 string Error
 // @Failure 404 string Error
-func(h *HandlerStruct)SearchTitleAndAuthor(c *gin.Context){
+func (h *HandlerStruct) SearchTitleAndAuthor(c *gin.Context) {
 	var req pb.Search
 	title := c.Query("title")
 	req.Title = title

@@ -8,12 +8,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// @Router 				/author/create [POST]
+// @Router 				/admin/author/create [POST]
 // @Summary 			CREATE AUTHOR
 // @Description		 	This api create author
 // @Tags 				AUTHOR
 // @Accept 				json
 // @Produce 			json
+// @Security            BearerAuth
 // @Param data 			body pb.AuthorCreate true "Author"
 // @Success 201 		{object} pb.Author
 // @Failure 400 		string Error
@@ -38,6 +39,7 @@ func (h *HandlerStruct) CreateAuthor(c *gin.Context) {
 // @Tags AUTHOR
 // @Accept json
 // @Produce json
+// @Security            BearerAuth
 // @Param id path string true "AUTHOR ID"
 // @Success 200 {object} pb.Author
 // @Failure 400  string Error
@@ -55,12 +57,13 @@ func (h *HandlerStruct) GetAuthor(c *gin.Context) {
 	c.JSON(200, author)
 }
 
-// @Router 				/author/update [PUT]
+// @Router 				/admin/author/update [PUT]
 // @Summary 			UPDATES AUTHOR
 // @Description		 	This api updatedes author
 // @Tags 				AUTHOR
 // @Accept 				json
 // @Produce 			json
+// @Security            BearerAuth
 // @Param  author  body pb.Author true "Author"
 // @Success 200			{object} string "author updated successfully"
 // @Failure 400 		string Error
@@ -79,12 +82,13 @@ func (h *HandlerStruct) UpdateAuthor(c *gin.Context) {
 	c.JSON(200, gin.H{"message": "author updated successfully"})
 }
 
-// @Router 				/author/{id} [DELETE]
+// @Router 				/admin/author/{id} [DELETE]
 // @Summary 			DELETE AUTHOR
 // @Description		 	This api deletes author by id
 // @Tags 				AUTHOR
 // @Accept 				json
 // @Produce 			json
+// @Security            BearerAuth
 // @Param 			    id path string true "AUTHOR ID"
 // @Success 200			{object} string "author deleted successfully"
 // @Failure 400 		string Error
@@ -109,6 +113,7 @@ func (h *HandlerStruct) DeleteAuthor(c *gin.Context) {
 // @Tags AUTHOR
 // @Accept json
 // @Produce json
+// @Security            BearerAuth
 // @Param name query string false "Author Name"
 // @Success 200 {object} pb.Authors
 // @Failure 400  string Error
@@ -132,10 +137,11 @@ func (h *HandlerStruct) GetAllAuthors(c *gin.Context) {
 // @Tags 				AUTHOR
 // @Accept 				json
 // @Produce 			json
+// @Security            BearerAuth
 // @Param 			    id path string true "AUTHOR ID"
 // @Success 201 		{object} pb.UserBook
 // @Failure 400 		string Error
-func (h *HandlerStruct)GetAuthorBooks(c *gin.Context) {
+func (h *HandlerStruct) GetAuthorBooks(c *gin.Context) {
 	authorID := c.Param("id")
 
 	req := &pb.AuthorID{AuthorId: authorID}

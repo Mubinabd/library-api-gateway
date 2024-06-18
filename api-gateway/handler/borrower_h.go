@@ -5,12 +5,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// @Router 				/borrower/create [POST]
+// @Router 				/admin/borrower/create [POST]
 // @Summary 			CREATE BORROWER
 // @Description		 	This api create borrower
 // @Tags 				BORROWER
 // @Accept 				json
 // @Produce 			json
+// @Security            BearerAuth
 // @Param data 			body pb.BorrowerCreate true "Borrower"
 // @Success 201 		{object} pb.Borrower
 // @Failure 400 		string Error
@@ -35,6 +36,7 @@ func (h *HandlerStruct) CreateBorrower(c *gin.Context) {
 // @Tags 				BORROWER
 // @Accept 				json
 // @Produce 			json
+// @Security            BearerAuth
 // @Param 			    id path string true "BORROWER ID"
 // @Success 200			{object} pb.Borrower
 // @Failure 400 		string Error
@@ -70,12 +72,13 @@ func (h *HandlerStruct) GetBorrowers(c *gin.Context) {
 	c.JSON(200, borrowers)
 }
 
-// @Router 				/borrower/update [PUT]
+// @Router 				/admin/borrower/update [PUT]
 // @Summary 			UPDATES BORROWER
 // @Description		 	This api updates borrower
 // @Tags 				BORROWER
 // @Accept 				json
 // @Produce 			json
+// @Security            BearerAuth
 // @Param  borrower  body pb.BorrowerCreate true "Borrower"
 // @Success 200			{object} string "borrower updated successfully"
 // @Failure 400 		string Error
@@ -94,12 +97,13 @@ func (h *HandlerStruct) UpdateBorrower(c *gin.Context) {
 	c.JSON(200, borrower)
 }
 
-// @Router 				/borrower/{id} [DELETE]
+// @Router 				/admin/borrower/{id} [DELETE]
 // @Summary 			DELETES BORROWER
 // @Description		 	This api deletes borrower by id
 // @Tags 				BORROWER
 // @Accept 				json
 // @Produce 			json
+// @Security            BearerAuth
 // @Param 			    id path string true "BORROWER ID"
 // @Success 200			{object} string "borrower deleted successfully"
 // @Failure 400 		string Error
@@ -122,11 +126,12 @@ func (h *HandlerStruct) DeleteBorrower(c *gin.Context) {
 // @Tags 				BORROWER
 // @Accept 				json
 // @Produce 			json
+// @Security            BearerAuth
 // @Param 			    id path string true "USER ID"
 // @Success 200			{object} pb.BorrowedBooks
 // @Failure 400 		string Error
 // @Failure 404 		string Error
-func( h *HandlerStruct) GetBorrowerBooks(c *gin.Context){
+func (h *HandlerStruct) GetBorrowerBooks(c *gin.Context) {
 	var req pb.UserId
 	id := c.Param("id")
 	req.UserId = id
@@ -137,27 +142,28 @@ func( h *HandlerStruct) GetBorrowerBooks(c *gin.Context){
 	}
 	c.JSON(200, book)
 }
+
 // @Router /borrower/overdue [GET]
 // @Summary Get Overdue Books
 // @Description This API retrieves a list of books that are overdue.
 // @Tags BORROWER
 // @Accept json
 // @Produce json
+// @Security            BearerAuth
 // @Success 200 {object} pb.BorrowedBooks
 // @Failure 400 string Error
 // @Failure 404 string Error
 func (h *HandlerStruct) GetOverdueBooks(c *gin.Context) {
-    req := &pb.OverdueRequest{}
+	req := &pb.OverdueRequest{}
 
-    overdue, err := h.Clients.BorrowerClient.GetOverdueBooks(c.Request.Context(), req)
-    if err != nil {
-        c.JSON(400, gin.H{"error": err.Error()})
-        return
-    }
+	overdue, err := h.Clients.BorrowerClient.GetOverdueBooks(c.Request.Context(), req)
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
 
-    c.JSON(200, overdue)
+	c.JSON(200, overdue)
 }
-
 
 // @Router 				/borrower/history/{id} [GET]
 // @Summary 			GET USER BORROWER HISTORY
@@ -165,11 +171,12 @@ func (h *HandlerStruct) GetOverdueBooks(c *gin.Context) {
 // @Tags 				BORROWER
 // @Accept 				json
 // @Produce 			json
+// @Security            BearerAuth
 // @Param 			    id path string true "USER ID"
 // @Success 200			{object} pb.BorrowingHistory
 // @Failure 400 		string Error
 // @Failure 404 		string Error
-func(h *HandlerStruct)HistoryUser(c *gin.Context){
+func (h *HandlerStruct) HistoryUser(c *gin.Context) {
 	var req pb.UserId
 	id := c.Param("id")
 	req.UserId = id

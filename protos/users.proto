@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+option go_package = "/genproto";
+
+package protos;
+
+service UserService {
+    rpc RegisterUser(UserCreate) returns (User) {}
+    rpc GetUser(ByUsername) returns (User) {}
+    rpc LoginUser(LoginReq) returns (Token) {}
+}
+
+
+message UserCreate {
+    string Id = 1;
+    string Username = 2;
+    string Password = 3;
+    string Email = 4;
+}
+
+message User {
+    string Username = 1;
+    string Password = 2;
+    string Email = 3;
+}
+message ByUsername {
+    string Username = 1;
+}
+
+message Users {
+    repeated User Users = 1;
+}
+message LoginReq {
+    string Username = 1;
+    string Password = 2;
+}
+message Token {
+    string AccessToken = 1;
+    string RefreshToken = 2;
+}
