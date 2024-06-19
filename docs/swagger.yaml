@@ -754,6 +754,8 @@ paths:
           description: Not Found
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: GET ALL BORROWERS
       tags:
       - BORROWER

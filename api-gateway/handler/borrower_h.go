@@ -59,10 +59,11 @@ func (h *HandlerStruct) GetBorrower(c *gin.Context) {
 // @Tags 				BORROWER
 // @Accept 				json
 // @Produce 			json
+// @Security            BearerAuth
 // @Success 200			{object} pb.Borrowers
 // @Failure 400 		string Error
 // @Failure 404 		string Error
-func (h *HandlerStruct) GetBorrowers(c *gin.Context) {
+func (h *HandlerStruct) GetAllBorrowers(c *gin.Context) {
 	var req pb.Void
 	borrowers, err := h.Clients.BorrowerClient.GetAllBorrowers(c.Request.Context(), &req)
 	if err != nil {

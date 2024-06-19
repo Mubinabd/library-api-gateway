@@ -882,6 +882,11 @@ const docTemplate = `{
         },
         "/borrower/all": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "This api get all borrowers",
                 "consumes": [
                     "application/json"

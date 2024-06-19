@@ -73,7 +73,7 @@ func NewGin(h *handler.HandlerStruct) *gin.Engine {
 	borrower.Use(middleware.Middleware())
 	{
 		borrower.GET("/:id", h.GetBorrower)
-		borrower.GET("/all", h.GetBorrowers)
+		borrower.GET("/all", h.GetAllBorrowers)
 		borrower.GET("/users/:id", h.GetBorrowerBooks)
 		borrower.GET("/history/:id", h.HistoryUser)
 		borrower.GET("/overdue", h.GetOverdueBooks)
