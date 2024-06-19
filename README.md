@@ -14,8 +14,8 @@ qaytarganliklarini ham bilib bilishlari mumkin.
 1. Initialize a git repository and clone the project:
     ```sh
     git init
-    git clone git@github.com/Mubinabd/library-exam.git
-    ```
+    git clone git@github.com/Mubinabd/library-api-gateway.git
+    ```    
 2. Create a database named `library` on port `5432`.
 3. Update the `.env` file with the appropriate configuration.
    ```.env
