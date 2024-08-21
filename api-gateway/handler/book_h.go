@@ -54,17 +54,17 @@ func (h *HandlerStruct) GetBook(c *gin.Context) {
 	c.JSON(200, book)
 }
 
-// @Router 				/book/all [GET]
-// @Summary 			GET ALL BOOKS
-// @Description		 	This api get all books
-// @Tags 				BOOK
-// @Accept 				json
-// @Produce 			json
-// @Security            BearerAuth
-// @Param 			    title query string false "Book Title"
-// @Success 200			{object} pb.TitleFilter
-// @Failure 400 		string Error
-// @Failure 404 		string Error
+	// @Router 				/book/all [GET]
+	// @Summary 			GET ALL BOOKS
+	// @Description		 	This api get all books
+	// @Tags 				BOOK
+	// @Accept 				json
+	// @Produce 			json
+	// @Security            BearerAuth
+	// @Param 			    title query string false "Book Title"
+	// @Success 200			{object} pb.TitleFilter
+	// @Failure 400 		string Error
+	// @Failure 404 		string Error
 func (h *HandlerStruct) GetBooks(c *gin.Context) {
 	var titleFilter pb.TitleFilter
 	title := c.Query("title")
@@ -77,17 +77,17 @@ func (h *HandlerStruct) GetBooks(c *gin.Context) {
 	c.JSON(200, book)
 }
 
-// @Router 				/admin/book/update [PUT]
-// @Summary 			UPDATES BOOK
-// @Description		 	This api updatedes book
-// @Tags 				BOOK
-// @Accept 				json
-// @Produce 			json
-// @Security            BearerAuth
-// @Param  book  body pb.BookCreate true "Book"
-// @Success 200			{object} string "book updated successfully"
-// @Failure 400 		string Error
-// @Failure 404 		string Error
+	// @Router 				/admin/book/update [PUT]
+	// @Summary 			UPDATES BOOK
+	// @Description		 	This api updatedes book
+	// @Tags 				BOOK
+	// @Accept 				json
+	// @Produce 			json
+	// @Security            BearerAuth
+	// @Param  book  body pb.BookCreate true "Book"
+	// @Success 200			{object} string "book updated successfully"
+	// @Failure 400 		string Error
+	// @Failure 404 		string Error
 func (h *HandlerStruct) UpdateBook(c *gin.Context) {
 	var req pb.BookCreate
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -104,7 +104,7 @@ func (h *HandlerStruct) UpdateBook(c *gin.Context) {
 
 // @Router 				/admin/book/del/{id} [DELETE]
 // @Summary 			DELETE BOOK
-// @Description		 	This api logs book in
+// @Description		 	This api logs book in id	
 // @Tags 				BOOK
 // @Accept 				json
 // @Produce 			json

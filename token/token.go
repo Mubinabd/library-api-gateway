@@ -2,6 +2,8 @@ package token
 
 import (
 	"errors"
+	"log"
+
 	// "log"
 	"time"
 
@@ -58,15 +60,20 @@ func ExtractClaim(tokenStr string) (jwt.MapClaims, error) {
 		err   error
 	)
 
+	//log.Println("Token String:", tokenStr)
+
 	keyFunc := func(token *jwt.Token) (interface{}, error) {
-		return []byte(signingKey), nil
+		return []byte(signingKey), nil // Ensure `signingKey` is the correct key
 	}
 	token, err = jwt.Parse(tokenStr, keyFunc)
 	if err != nil {
+		log.Println("Error parsing token:", err)
 		return nil, err
 	}
+	//log.Println("Parsed Token:", token)
 
 	claims, ok := token.Claims.(jwt.MapClaims)
+	log.Println("Claims:", claims)
 	if !(ok && token.Valid) {
 		return nil, errors.New("invalid token")
 	}
