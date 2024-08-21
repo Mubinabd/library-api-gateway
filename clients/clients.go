@@ -16,7 +16,7 @@ type Clients struct {
 }
 
 func NewClients() *Clients {
-	conn, err := grpc.NewClient("localhost:8085", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.NewClient("library:8085", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		slog.Error("error:", err)
 	}
