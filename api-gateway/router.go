@@ -86,6 +86,6 @@ func NewGin(h *handler.HandlerStruct) *gin.Engine {
 		genre.GET("/genre/:id", h.GetBooksByGenre)
 	}
 	url := ginSwagger.URL("swagger/doc.json")
-	r.GET("/api/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
 	return r
 }

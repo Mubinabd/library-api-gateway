@@ -30,7 +30,7 @@ func Load() Config {
 
   config := Config{}
 
-  config.HTTPPort = cast.ToString(getOrReturnDefaultValue("HTTP_PORT", ":8080"))
+  config.HTTPPort = cast.ToString(getOrReturnDefaultValue("HTTP_PORT", ":8090"))
 
   config.PostgresHost = cast.ToString(getOrReturnDefaultValue("POSTGRES_HOST", "postgres_dock"))
   config.PostgresPort = cast.ToInt(getOrReturnDefaultValue("POSTGRES_PORT", 5432))
