@@ -4,7 +4,6 @@ import (
 	"github.com/Mubinabd/library-api-gateway/api-gateway/handler"
 	_ "github.com/Mubinabd/library-api-gateway/docs"
 
-	"github.com/Mubinabd/library-api-gateway/middleware"
 	"github.com/gin-contrib/cors"
 
 	"github.com/gin-gonic/gin"
@@ -29,7 +28,6 @@ func NewGin(h *handler.HandlerStruct) *gin.Engine {
 	r.Use(cors.New(corsConfig))
 
 	authorAdmin := r.Group("/admin/author")
-	authorAdmin.Use(middleware.MiddlewareAdmin())
 	{
 		authorAdmin.POST("/create", h.CreateAuthor)
 		authorAdmin.PUT("/update", h.UpdateAuthor)
@@ -37,7 +35,6 @@ func NewGin(h *handler.HandlerStruct) *gin.Engine {
 	}
 
 	author := r.Group("/author")
-	author.Use(middleware.Middleware())
 	{
 		author.GET("/:id", h.GetAuthor)
 		author.GET("", h.GetAllAuthors)
@@ -45,7 +42,6 @@ func NewGin(h *handler.HandlerStruct) *gin.Engine {
 	}
 
 	bookAdmin := r.Group("/admin/book")
-	bookAdmin.Use(middleware.MiddlewareAdmin())
 	{
 		bookAdmin.POST("/create", h.CreateBook)
 		bookAdmin.PUT("/update", h.UpdateBook)
@@ -53,7 +49,6 @@ func NewGin(h *handler.HandlerStruct) *gin.Engine {
 
 	}
 	book := r.Group("/book")
-	book.Use(middleware.Middleware())
 	{
 		book.GET("/:title", h.GetBook)
 		book.GET("/all", h.GetBooks)
@@ -62,7 +57,6 @@ func NewGin(h *handler.HandlerStruct) *gin.Engine {
 	}
 
 	borrowerAdmin := r.Group("/admin/borrower")
-	borrowerAdmin.Use(middleware.Middleware())
 	{
 		borrowerAdmin.POST("/create", h.CreateBorrower)
 		borrowerAdmin.PUT("/update", h.UpdateBorrower)
@@ -70,7 +64,6 @@ func NewGin(h *handler.HandlerStruct) *gin.Engine {
 	}
 
 	borrower := r.Group("/borrower")
-	borrower.Use(middleware.Middleware())
 	{
 		borrower.GET("/:id", h.GetBorrower)
 		borrower.GET("/all", h.GetAllBorrowers)
@@ -80,7 +73,6 @@ func NewGin(h *handler.HandlerStruct) *gin.Engine {
 	}
 
 	genreAdmin := r.Group("/admin/genre")
-	genreAdmin.Use(middleware.Middleware())
 	{
 		genreAdmin.POST("/create", h.CreateGenre)
 		genreAdmin.PUT("/update", h.UpdateGenre)
@@ -88,7 +80,6 @@ func NewGin(h *handler.HandlerStruct) *gin.Engine {
 
 	}
 	genre := r.Group("/genre")
-	genre.Use(middleware.Middleware())
 	{
 		genre.GET("/:name", h.GetGenre)
 		genre.GET("/all", h.GetAllGenres)
